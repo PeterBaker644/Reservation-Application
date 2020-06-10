@@ -75,7 +75,7 @@
     </footer>
 
     <script type="text/javascript">
-        $(".sumbit").on("click", function (event) {
+        $(".submit").on("click", function (event) {
             event.preventDefault();
             let newReservation = {
                 name: $("#reserve-name").val().trim(),
@@ -84,8 +84,10 @@
                 id: $("#reserve-unique-id").val().trim(),
                 time: moment().format('MMMM Do, h:mm a')
             };
+            console.log(newReservation);
 
             $.post("/api/tables", newReservation, function (data) {
+                console.log("Is this working at all?")
                     if (data) {
                         alert("You have been succesfully booked");
                     } else {

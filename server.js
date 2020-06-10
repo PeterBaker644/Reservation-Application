@@ -46,10 +46,9 @@ app.post("/api/tables", function (req, res) {
         if (reservations.length == 5) {
             waitlist.push(newReservation);
             //shouldn't be return, needs to be something else.
-            res = false;
         } else {
             reservations.push(newReservation);
-            res = true;
+            res.json("true");
         }
 });
 
