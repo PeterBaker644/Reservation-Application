@@ -115,27 +115,7 @@
                                 </tr>
                             </thead>
                             <tbody id="waiting-list">
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark Otto</td>
-                                    <td>@mdo</td>
-                                    <td>###-###-####</td>
-                                    <td>moment</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob Thorton</td>
-                                    <td>@fat</td>
-                                    <td>###-###-####</td>
-                                    <td>moment</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>###-###-####</td>
-                                    <td>moment</td>
-                                </tr>
+                                <!-- New bits go here -->
                             </tbody>
                         </table>
                     </div>
@@ -175,8 +155,8 @@
                             // Get a reference to the tableList element and populate it with tables
 
                             // Then display the fields in the HTML (Section Name, Date, URL)
-                            var listItem = $("<ul>").addClass('list-group w-100');
-                            listItem.append(
+                            let tableItem = $("<ul>").addClass('list-group w-100');
+                            tableItem.append(
                                 // $("<li>").text("Table #" + (i + 1)).addClass("list-group-item"),
                                 $("<li>").text("ID: " + tableData[i].id).addClass("list-group-item"),
                                 $("<li>").text("Name: " + tableData[i].name).addClass("list-group-item"),
@@ -184,7 +164,7 @@
                                 $("<li>").text("Phone: " + tableData[i].phone).addClass("list-group-item"),
                             );
 
-                            $(element).append(listItem);
+                            $(element).append(tableItem);
                         }
                     });
                 });
@@ -204,18 +184,17 @@
                     for (var i = 0; i < waitData.length; i++) {
 
                         // Get a reference to the waitList element and populate it with tables
-                        var waitList = $("#waitList");
+                        var waitList = $("#waiting-list");
 
                         // Then display the fields in the HTML (Section Name, Date, URL)
-                        var listItem = $("<li class='list-group-item mt-4'>");
+                        var listItem = $("<tr>");
 
                         listItem.append(
-                            $("<h2>").text("Table #" + (i + 1)),
-                            $("<hr>"),
-                            $("<h2>").text("ID: " + waitData[i].customerID),
-                            $("<h2>").text("Name: " + waitData[i].customerName),
-                            $("<h2>").text("Email: " + waitData[i].customerEmail),
-                            $("<h2>").text("Phone: " + waitData[i].phoneNumber)
+                            $("<th>").text(i + 1).attr("scope", "row"),
+                            $("<td>").text(waitData[i].name),
+                            $("<td>").text(waitData[i].email),
+                            $("<td>").text(waitData[i].phone),
+                            $("<td>").text(waitData[i].time)
                         );
 
                         waitList.append(listItem);
