@@ -44,14 +44,8 @@
                         <h2 class="card-title font-weight-normal mb-0">Table #1</h2>
                         <button type="button" class="btn btn-warning btn-sm">Clear Table</button>
                     </div>
-                    <div class="card-body d-flex align-items-center" style="background-color: #f7fbff">
-                        <!-- Maybe replace this line in the code: -->
-                        <ul class="list-group w-100">
-                            <li class="list-group-item">ID: <span class="text-muted">Empty</span></li>
-                            <li class="list-group-item">Name: <span class="text-muted">Empty</span></li>
-                            <li class="list-group-item">Email: <span class="text-muted">Empty</span></li>
-                            <li class="list-group-item">Phone: <span class="text-muted">Empty</span></li>
-                        </ul>
+                    <div class="card-body d-flex align-items-center justify-content-center table-contents" style="background-color: #f7fbff">
+                        <!-- We add the section to here -->
                     </div>
                 </div>
 
@@ -60,12 +54,9 @@
                         <h2 class="card-title font-weight-normal mb-0">Table #2</h2>
                         <button type="button" class="btn btn-warning btn-sm">Clear Table</button>
                     </div>
-                    <div class="card-body d-flex align-items-center justify-content-center"
-                        style="background-color: #f7fbff">
+                    <div class="card-body d-flex align-items-center justify-content-center table-contents" style="background-color: #f7fbff">
                         <!-- Maybe replace this line in the code: -->
-                        <div class="display-2 text-muted">
-                            EMPTY
-                        </div>
+
                     </div>
                 </div>
 
@@ -74,12 +65,9 @@
                         <h2 class="card-title font-weight-normal mb-0">Table #3</h2>
                         <button type="button" class="btn btn-warning btn-sm">Clear Table</button>
                     </div>
-                    <div class="card-body d-flex align-items-center justify-content-center"
-                        style="background-color: #f7fbff">
+                    <div class="card-body d-flex align-items-center justify-content-center table-contents" style="background-color: #f7fbff">
                         <!-- Maybe replace this line in the code: -->
-                        <div class="display-2 text-muted">
-                            EMPTY
-                        </div>
+
                     </div>
                 </div>
 
@@ -88,12 +76,9 @@
                         <h2 class="card-title font-weight-normal mb-0">Table #4</h2>
                         <button type="button" class="btn btn-warning btn-sm">Clear Table</button>
                     </div>
-                    <div class="card-body d-flex align-items-center justify-content-center"
-                        style="background-color: #f7fbff">
+                    <div class="card-body d-flex align-items-center justify-content-center table-contents" style="background-color: #f7fbff">
                         <!-- Maybe replace this line in the code: -->
-                        <div class="display-2 text-muted">
-                            EMPTY
-                        </div>
+
                     </div>
                 </div>
 
@@ -102,12 +87,9 @@
                         <h2 class="card-title font-weight-normal mb-0">Table #5</h2>
                         <button type="button" class="btn btn-warning btn-sm">Clear Table</button>
                     </div>
-                    <div class="card-body d-flex align-items-center justify-content-center"
-                        style="background-color: #f7fbff">
+                    <div class="card-body d-flex align-items-center justify-content-center table-contents" style="background-color: #f7fbff">
                         <!-- Maybe replace this line in the code: -->
-                        <div class="display-2 text-muted">
-                            EMPTY
-                        </div>
+
                     </div>
                 </div>
 
@@ -165,7 +147,8 @@
 
     <footer class="footer mt-4">
         <div class="container">
-            <p><a href="#" id="clear">Reset Tables</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a>
+            <p><a href="#" id="clear">Reset Tables</a> | <a href="/api/tables">API Table Link</a> | <a
+                    href="/api/waitlist">API Wait List</a>
             </p>
         </div>
     </footer>
@@ -174,36 +157,36 @@
         // In this code, jQuery is used to "download" the data from our server
         // We then dynamically display this content in our table. This is very similar to the group projects you just completed.
         // It's also very similar to the NYT search application. In fact, I copied a ton of code from there.
+        
 
         function runTableQuery() {
             // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
             $.ajax({ url: "/api/tables", method: "GET" })
                 .then(function (tableData) {
 
-                    // Here we then log the tableData to console, where it will show up as an object.
                     console.log(tableData);
                     console.log("------------------------------------");
 
-                    // Loop through and display each of the customers
-                    for (var i = 0; i < tableData.length; i++) {
+                    $.each($(".table-contents"), function(i, element) {
+                        if (!tableData[i]) {
+                            console.log("it's empty")
+                            $(element).append("<div class='display-2 text-muted'>EMPTY</div>");
+                        } else {
+                            // Get a reference to the tableList element and populate it with tables
 
-                        // Get a reference to the tableList element and populate it with tables
-                        var tableList = $("#tableList");
+                            // Then display the fields in the HTML (Section Name, Date, URL)
+                            var listItem = $("<ul>").addClass('list-group w-100');
+                            listItem.append(
+                                // $("<li>").text("Table #" + (i + 1)).addClass("list-group-item"),
+                                $("<li>").text("ID: " + tableData[i].id).addClass("list-group-item"),
+                                $("<li>").text("Name: " + tableData[i].name).addClass("list-group-item"),
+                                $("<li>").text("Email: " + tableData[i].email).addClass("list-group-item"),
+                                $("<li>").text("Phone: " + tableData[i].phone).addClass("list-group-item"),
+                            );
 
-                        // Then display the fields in the HTML (Section Name, Date, URL)
-                        var listItem = $("<li class='list-group-item mt-4'>");
-
-                        listItem.append(
-                            $("<h2>").text("Table #" + (i + 1)),
-                            $("<hr>"),
-                            $("<h2>").text("ID: " + tableData[i].customerID),
-                            $("<h2>").text("Name: " + tableData[i].customerName),
-                            $("<h2>").text("Email: " + tableData[i].customerEmail),
-                            $("<h2>").text("Phone: " + tableData[i].phoneNumber)
-                        );
-
-                        tableList.append(listItem);
-                    }
+                            $(element).append(listItem);
+                        }
+                    });
                 });
         }
 
@@ -253,7 +236,7 @@
             });
         }
 
-        $("#clear").on("click", clearTable);
+        $("#clear").on("click", clearTables);
 
 
         // Run Queries!

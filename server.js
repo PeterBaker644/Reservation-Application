@@ -59,7 +59,7 @@ app.post("api/clear", function (req, res){
         waitlist = [];
         reservations = [];
     } else {
-
+// ??? Hasn't been written yet
     }
 });
 
